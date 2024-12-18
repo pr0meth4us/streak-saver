@@ -1,0 +1,118 @@
+openapi: 3.0.1
+info:
+  title: Secure Secret Vault
+  version: 1.0
+  description: A highly secure secret management system with automated login for TikTok.
+servers:
+  - url: http://localhost:5001
+    description: Local development server
+paths:
+  /store_secret:
+    post:
+      summary: Store a new secret securely.
+      operationId: storeSecret
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: The username to store
+                  example: "user@example.com"
+                password:
+                  type: string
+                  description: The password to store
+                  example: "password123"
+      responses:
+        201:
+          description: Secret stored successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  secret_id:
+                    type: string
+                    example: "secret-user@example.com"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  message:
+                    type: string
+                    example: "Error message details"
+  /login_tiktok:
+    post:
+      summary: Automated TikTok login using stored credentials.
+      operationId: loginTikTok
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: The username to retrieve credentials for
+                  example: "user@example.com"
+                master_password:
+                  type: string
+                  description: The master password to decrypt secrets
+                  example: "masterpassword"
+      responses:
+        200:
+          description: Login attempt completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  message:
+                    type: string
+                    example: "Login attempt completed"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  message:
+                    type: string
+                    example: "Error message details"
+components:
+  schemas:
+    Secret:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username associated with the secret
+        password:
+          type: string
+          description: The password associated with the secret
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username to login with

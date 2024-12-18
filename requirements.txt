@@ -1,0 +1,11 @@
+Flask==2.1.0
+flask-restx==0.5.1
+Werkzeug==2.1.1
+
+# AWS and Secret Management
+boto3==1.26.137
+python-dotenv==1.0.0
+argon2-cffi==21.3.0
+cryptography==41.0.1
+python-jose==3.3.0
+pyOpenSSL==23.2.0
